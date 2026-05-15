@@ -6,6 +6,7 @@ int redCellCount = 0, blueCellCount = 0;
 int redScore = 0, blueScore = 0;
 int turn = 0;
 int readTime = 2, blueTime = 2, gameTime = 3;
+//HI I'm on branch redBlue
 
 pair<int,int> getInput()
 {
