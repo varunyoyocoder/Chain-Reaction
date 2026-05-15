@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+//Hi there
+
 int redCellCount = 0, blueCellCount = 0;
 int redScore = 0, blueScore = 0;
 int turn = 0;
