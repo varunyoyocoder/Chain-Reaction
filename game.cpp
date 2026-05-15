@@ -47,15 +47,15 @@ void printBoard(const vector<vector<pair<int, int>>> &board)
 
 int gameOver()
 {
-    if (turn == 0 && redCellCount == 0)
+    if (turn == 0 && blueCellCount == 0)
     {
-        cout<<"Blue wins!"<<endl;
+        cout<<"Red wins!"<<endl;
         cout << "Red Score: " << redScore << " | Blue Score: " << blueScore << endl;
         return 1;
     }
-    else if (turn == 1 && blueCellCount == 0)
+    else if (turn == 1 && redCellCount == 0)
     {
-        cout<<"Red wins!"<<endl;
+        cout<<"Blue wins!"<<endl;
         cout << "Red Score: " << redScore << " | Blue Score: " << blueScore << endl;
         return 1;
     }
@@ -115,12 +115,12 @@ void updateCell(int row, int col, int colorOfCell, vector<vector<pair<int, int>>
 {
     if(board[row][col].first == 0){
             board[row][col].first = colorOfCell;
-            if (colorOfCell == 1)
+            if (colorOfCell == 2)
             {
                 redCellCount++;
                 redScore++;
             }
-            else if (colorOfCell == 2)
+            else if (colorOfCell == 1)
             {
                 blueCellCount++;
                 blueScore++;
@@ -129,13 +129,13 @@ void updateCell(int row, int col, int colorOfCell, vector<vector<pair<int, int>>
         else if (board[row][col].first !=colorOfCell)
         {
             board[row][col].first = colorOfCell;
-            if (colorOfCell == 1)
+            if (colorOfCell == 2)
             {
                 redCellCount++;
                 blueCellCount--;
                 redScore++;
             }
-            else if (colorOfCell == 2)
+            else if (colorOfCell == 1)
             {
                 blueCellCount++;
                 redCellCount--;
@@ -149,8 +149,8 @@ void chainReaction(int row, int col, vector<vector<pair<int, int>>> &board)
     if (!capacityFull(row, col, board))return;
     int colorOfCell=board[row][col].first;
 
-    if (colorOfCell == 1)redCellCount--;
-    else if (colorOfCell == 2)blueCellCount--;
+    if (colorOfCell == 2)redCellCount--;
+    else if (colorOfCell == 1)blueCellCount--;
 
     board[row][col].first = 0;
     board[row][col].second = 0;
@@ -187,32 +187,32 @@ void chainReaction(int row, int col, vector<vector<pair<int, int>>> &board)
     }
 }
 
-void redFirstTurn(vector<vector<pair<int, int>>> &board)
-{
-    int row, column;
-    cout << "Red choose a cell for first turn:";
-    tie(row, column) = getInput();
-    board[row][column].first = 1;
-    intitialiseBalls(row, column, board);
-    redCellCount++;
-    redScore += board[row][column].second;
-}
-
-
 void blueFirstTurn(vector<vector<pair<int, int>>> &board)
 {
     int row, column;
     cout << "Blue choose a cell for first turn:";
     tie(row, column) = getInput();
+    board[row][column].first = 1;
+    intitialiseBalls(row, column, board);
+    blueCellCount++;
+    blueScore += board[row][column].second;
+}
+
+
+void redFirstTurn(vector<vector<pair<int, int>>> &board)
+{
+    int row, column;
+    cout << "Red choose a cell for first turn:";
+    tie(row, column) = getInput();
     while (board[row][column].first == 1)
     {
-        cout << "Cell already occupied by red. Please choose another empty cell." << endl;
+        cout << "Cell already occupied by blue. Please choose another empty cell." << endl;
         tie(row, column) = getInput();
     }
     board[row][column].first = 2;
     intitialiseBalls(row, column, board);
-    blueCellCount++;
-    blueScore += board[row][column].second;
+    redCellCount++;
+    redScore += board[row][column].second;
 }
 
 void redTurn(vector<vector<pair<int, int>>> &board)
@@ -220,7 +220,7 @@ void redTurn(vector<vector<pair<int, int>>> &board)
     int row, column;
     cout << "Red choose a cell:";
     tie(row, column) = getInput();
-    while (board[row][column].first == 2 || board[row][column].first == 0)
+    while (board[row][column].first == 1 || board[row][column].first == 0)
     {
         cout << "Please choose another cell with red." << endl;
         cin >> row >> column;
@@ -236,7 +236,7 @@ void blueTurn(vector<vector<pair<int, int>>> &board)
     cout << "Blue choose a cell:";
     tie(row, column) = getInput();
     // middle of the game
-    while (board[row][column].first == 1 || board[row][column].first == 0)
+    while (board[row][column].first == 2 || board[row][column].first == 0)
     {
         cout << "Please choose another cell with blue." << endl;
         tie(row, column) = getInput();
@@ -251,20 +251,25 @@ int main()
     vector<vector<pair<int, int>>> board(12, vector<pair<int, int>>(6, make_pair(0, 0)));
 
     cout << "Welcome to Chain Reactor!" << endl;
-    redFirstTurn(board);
-    printBoard(board);
     blueFirstTurn(board);
+    cout << "Red Score: " << redScore << " | Blue Score: " << blueScore << endl;
+    cout << "Red Cells: " << redCellCount << " | Blue Cells: " << blueCellCount << endl;
+    printBoard(board);
+
+    redFirstTurn(board);
+    cout << "Red Score: " << redScore << " | Blue Score: " << blueScore << endl;
+    cout << "Red Cells: " << redCellCount << " | Blue Cells: " << blueCellCount << endl;
     printBoard(board);
     while (!gameOver())
     {
         if (turn == 0)
         {
-            redTurn(board);
+            blueTurn(board);
             turn = 1;
         }
         else
         {
-            blueTurn(board);
+            redTurn(board);
             turn = 0;
         }
         printBoard(board);
