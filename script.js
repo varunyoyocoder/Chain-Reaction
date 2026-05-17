@@ -48,7 +48,7 @@ const board = Array.from(
     ),
 );
 
-/* CREATE BOARD */
+
 
 function createBoard() {
   for (let row = 0; row < ROWS; row++) {
@@ -115,7 +115,7 @@ function gameOver() {
 
 startGame();
 
-/* TIMERS */
+
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
@@ -151,7 +151,7 @@ function pauseInterval() {//stops the setinterval for timers
   pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
 }
 
-// Resume
+
 function resumeInterval() {
   clearInterval(intervalId); // Prevents duplicate intervals
   pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable
