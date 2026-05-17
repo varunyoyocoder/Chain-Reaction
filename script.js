@@ -15,15 +15,15 @@ let intervalId = "resume";
 
 // accessing clickable elements by id and updating them in js
 const boardElement = document.getElementById("board"); // css class board, html id board 72 cells clickable and id accessed
-
 const explodeSound = document.getElementById("explodeSound"); // html audio id,
-
 const turnText = document.getElementById("turnText"); //class center text, id turn text,updated in js
 
 const pauseButton = document.getElementById("pauseBtn");
+
 const pauseDialogBox = document.getElementById("pauseOverlay");
-const restartDialogBox = document.getElementById("restartOverlay");
 const resumeButton = document.getElementById("resumeBtn");
+
+const restartDialogBox = document.getElementById("restartOverlay");
 const restartButton = document.getElementById("restartBtn");
 const dialogBoxHeader = document.getElementById("dialogBoxHeader");
 const dialogBoxPara = document.getElementById("dialogBoxPara");
@@ -351,6 +351,7 @@ function updateBoard() {
   });
 
   document.getElementById("blueScore").innerText = `BLUE ${blueScore}`;
+
   document.getElementById("redScore").innerText = `RED ${redScore}`;
   console.log(blueCell, redCell);
   if (turn > 1 && (redCell === 0 || blueCell === 0)) {

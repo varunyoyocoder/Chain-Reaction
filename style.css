@@ -101,6 +101,7 @@ body {
     font-weight: bold;
 
     flex-wrap: wrap;
+    margin-top: 1em;
 
     justify-content: flex-end;
 }
@@ -207,31 +208,6 @@ body {
 
     
 }
-
-
-/* ORB ANIMATION 
-
-@keyframes pulse {
-
-    0% {
-
-        transform: scale(1);
-    }
-
-    50% {
-
-        transform: scale(1.15);
-    }
-
-    100% {
-
-        transform: scale(1);
-    }
-} */
-
-
-/* TABLET */
-
 
 
 @media (max-width: 992px)
@@ -377,8 +353,6 @@ body {
     }
 }
 #pauseBtn {
-
-    
 
     color: black;
 
