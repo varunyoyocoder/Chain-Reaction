@@ -1,0 +1,231 @@
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2b001f,
+            #71005f,
+            #d000b8
+        );
+
+    overflow: hidden;
+}
+
+
+/* MAIN CONTAINER */
+
+.landing-container {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+/* GAME CARD */
+
+.game-card {
+
+    width: min(90vw, 500px);
+
+    background:
+        rgba(20, 0, 20, 0.85);
+
+    border:
+
+        2px solid #ff79ff;
+
+    border-radius: 25px;
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+
+        0 0 20px rgba(255, 0, 255, 0.4),
+
+        0 0 50px rgba(255, 0, 255, 0.2);
+}
+
+
+/* TITLE */
+
+.game-title {
+
+    font-size: clamp(38px, 5vw, 60px);
+
+    color: white;
+
+    margin-bottom: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* SUBTITLE */
+
+.subtitle {
+
+    color: #dddddd;
+
+    font-size: 16px;
+
+    margin-bottom: 30px;
+}
+
+
+/* STARTER INFO */
+
+.starter-info {
+
+    margin-bottom: 25px;
+}
+
+
+.starter-info h2 {
+
+    color: #4da3ff;
+
+    font-size: 28px;
+}
+
+
+/* RULES BOX */
+
+.rules-box {
+
+    background:
+
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 35px;
+}
+
+
+.rules-box h3 {
+
+    color: white;
+
+    margin-bottom: 15px;
+
+    font-size: 22px;
+}
+
+
+.rules-box ul {
+
+    list-style: none;
+}
+
+
+.rules-box li {
+
+    color: #dddddd;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+}
+
+
+/* BUTTON */
+
+.start-btn {
+
+    padding: 15px 40px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0066ff,
+            #00c3ff
+        );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    box-shadow:
+        0 0 15px rgba(0, 170, 255, 0.6);
+}
+
+
+/* HOVER */
+
+.start-btn:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 0 25px rgba(0, 170, 255, 0.9);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 576px)
+{
+
+    .game-card {
+
+        padding: 30px 20px;
+    }
+
+    .starter-info h2 {
+
+        font-size: 22px;
+    }
+
+    .rules-box li {
+
+        font-size: 14px;
+    }
+
+    .start-btn {
+
+        width: 100%;
+    }
+}

@@ -13,6 +13,12 @@ let playerSeconds;
 let gameEnded = false;
 let intervalId = "resume";
 
+const gameTitle=document.getElementById("gameTitle");
+
+gameTitle.addEventListener("click",()=>{
+  window.location.href = "../index.html";
+})
+
 // accessing clickable elements by id and updating them in js
 const boardElement = document.getElementById("board"); 
 const explodeSound = document.getElementById("explodeSound"); 
@@ -39,7 +45,7 @@ const board = Array.from(
 
   () =>
     Array.from(
-      { length: COLS }, // returns an array with 12 col
+      { length: COLS }, // returns an array with 12 col arrays
 
       () => ({
         color: -1,
@@ -48,7 +54,7 @@ const board = Array.from(
     ),
 );
 
-/* CREATE BOARD */
+
 
 function createBoard() {
   for (let row = 0; row < ROWS; row++) {
@@ -115,7 +121,7 @@ function gameOver() {
 
 startGame();
 
-/* TIMERS */
+
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
@@ -151,7 +157,7 @@ function pauseInterval() {//stops the setinterval for timers
   pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
 }
 
-// Resume
+
 function resumeInterval() {
   clearInterval(intervalId); // Prevents duplicate intervals
   pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable

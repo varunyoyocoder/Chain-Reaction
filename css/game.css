@@ -9,7 +9,6 @@
 
 
 
-
 body {
 
     min-height: 100vh;
@@ -19,14 +18,19 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 
     background: linear-gradient(
-        135deg,
-        #d606c9,
-        #d602b6
-    );
+    135deg,
+    #d606c9,
+    #d602b6
+);
 }
 
 #turnText{
     color: blue;
+}
+
+#gameTitle:hover{
+    cursor: pointer;
+    color: gray;
 }
 
 
@@ -38,9 +42,9 @@ body {
 
     min-height: 60px;
 
-    background-color: #220814;
+background-color: #1a001f;
 
-    border-bottom: 2px solid #d4a8cc;
+border-bottom: 2px solid #b84dff;
 
     display: flex;
 
@@ -130,7 +134,7 @@ body {
 
     height: min(78vh, 760px);
 
-    background-color: black;
+background: rgba(10, 10, 10, 0.92);
 
     padding: min(1vw, 5px);
 
@@ -143,13 +147,17 @@ body {
     gap: min(0.6vw, 3px);
 
     border-radius: 8px;
+    border: 2px solid #b84dff;
+
+box-shadow:
+    0 0 18px rgba(184, 77, 255, 0.35);
 }
 
 
 
 .cell {
 
-    background-color: #07c80d;
+background-color: #242424;
 
     border: 1px solid black;
 
@@ -167,7 +175,9 @@ body {
 
 .cell:hover {
 
-    background-color: #0b5b03;
+background-color: #5d2f7d;
+box-shadow:
+    0 0 10px rgba(184, 77, 255, 0.45);
 
     transform: scale(1.05);
 }
@@ -194,7 +204,7 @@ body {
 
 .blue-orb {
 
-    background: #302dff;
+background: #3b82ff;
 
 
 }
@@ -203,7 +213,7 @@ body {
 
 .red-orb {
 
-    background: #ff365ec3;
+background: #ff4b6e;
 
     
 }
@@ -356,6 +366,7 @@ body {
 
     border: none;
 
+
     padding: 6px 12px;
 
     border-radius: 6px;
@@ -369,7 +380,7 @@ body {
 
 #pauseBtn:hover {
 
-    background: #d0d;
+background: #b84dff;
 }
 
 .overlay {

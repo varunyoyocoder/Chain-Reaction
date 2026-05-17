@@ -8,85 +8,75 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Chain RXN</title>
-
-
+    <title>Chain Reaction</title>
 
     <link rel="stylesheet"
-          href="style.css">
+          href="css/home.css">
+
+</head>
 
 <body>
 
-  
-     
+    <div class="landing-container">
 
-    <header class="top-bar">
+        <div class="game-card">
 
-        <div class="left-title">
-            CHAIN REACTION
-        </div>
+            <h1 class="game-title">
+                CHAIN REACTION
+            </h1>
 
-        <div class="center-text"
-             id="turnText">
+            <p class="subtitle">
+                A strategic multiplayer explosion game
+            </p>
 
-            BLUE player starts
+            <div class="starter-info">
 
-        </div>
+                <h2>
+                    🔵 Blue starts first
+                </h2>
 
-        <div class="right-info">
-
-            <span id="gameTimer">
-                GAME TIMER 5:00
-            </span>
-
-            <span id="playerTimer">
-                PLAYER TIMER 0:15
-            </span>
-
-            <span id="blueScore"> 
-                 0
-            </span>
-
-            <span id="redScore">
-                RED 0
-            </span>
-            <div id="pauseOverlay" class="overlay hidden">
-                <div class="dialog-box ">
-                    <h2>Game Paused</h2>
-                    <p>Screen is frozen.Click resume to continue playing</p>
-                    <button class="dialog-box-button" id="resumeBtn">Resume</button>
-                </div>
             </div>
-            <div id="restartOverlay" class="overlay hidden">
-                <div class="dialog-box">
-                    <h2 id ="dialogBoxHeader"></h2>
-                    <p id ="dialogBoxPara"></p>
-                    <button class="dialog-box-button" id="restartBtn">Restart</button>
-                </div>
+
+            <div class="rules-box">
+
+                <h3>Quick Rules</h3>
+
+                <ul>
+
+                    <li>
+                        Turn-Based: A tactical battle between two or more players.
+                    </li>
+
+                    <li>
+                        Timers: Includes a total Game Timer and a rapid Turn Timer to keep the pressure high.
+                    </li>
+
+                    <li>
+                        Scoring System: Points are calculated based on the number of pieces captured in a reaction and the number of chain reactions.
+                    </li>
+                    
+                    <li>
+                        Win Condition: Game ends when the board has only elements of one player (or) the timer runs out.
+                    </li>
+
+                </ul>
+
             </div>
-            <button id="pauseBtn">
-                PAUSE
-            </button>
-            
-        
+
+            <a href="game.html"
+               class="start-link">
+
+                <button class="start-btn">
+
+                    START GAME
+
+                </button>
+
+            </a>
 
         </div>
 
-    </header>
-
-    <main class="game-container">
-
-        <div class="board"
-             id="board">
-
-        </div>
-
-    </main>
-
-    <audio id="explodeSound"
-           src="sounds/explode.mp3"></audio>
-
-    <script src="script.js"></script>
+    </div>
 
 </body>
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chain RXN</title>
+
+
+
+    <link rel="stylesheet"
+          href="css/game.css">
+</head>
+
+<body>
+
+  
+     
+
+    <header class="top-bar">
+
+            <div class="left-title" id="gameTitle">
+                CHAIN REACTION
+            </div>
+
+        <div class="center-text"
+             id="turnText">
+
+            BLUE player starts
+
+        </div>
+
+        <div class="right-info">
+
+            <span id="gameTimer">
+                GAME TIMER 5:00
+            </span>
+
+            <span id="playerTimer">
+                PLAYER TIMER 0:15
+            </span>
+
+            <span id="blueScore"> 
+                 0
+            </span>
+
+            <span id="redScore">
+                RED 0
+            </span>
+            <div id="pauseOverlay" class="overlay hidden">
+                <div class="dialog-box ">
+                    <h2>Game Paused</h2>
+                    <p>Screen is frozen.Click resume to continue playing</p>
+                    <button class="dialog-box-button" id="resumeBtn">Resume</button>
+                </div>
+            </div>
+            <div id="restartOverlay" class="overlay hidden">
+                <div class="dialog-box">
+                    <h2 id ="dialogBoxHeader"></h2>
+                    <p id ="dialogBoxPara"></p>
+                    <button class="dialog-box-button" id="restartBtn">Restart</button>
+                </div>
+            </div>
+            <button id="pauseBtn">
+                PAUSE
+            </button>
+            
+        
+
+        </div>
+
+    </header>
+
+    <main class="game-container">
+
+        <div class="board"
+             id="board">
+
+        </div>
+
+    </main>
+
+    <audio id="explodeSound"
+           src="sounds/explode.mp3"></audio>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
