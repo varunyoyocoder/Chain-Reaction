@@ -8,21 +8,70 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Chain Reactor</title>
+    <title>Chain RXN</title>
 
-    <link rel="stylesheet" href="style.css">
 
-</head>
+
+    <link rel="stylesheet"
+          href="style.css">
 
 <body>
 
-    <h1>Chain Reactor</h1>
+    <!-- TOP BAR -->
+     
 
-    <div id="turn-display">
-        Current Turn: RED
-    </div>
+    <header class="top-bar">
 
-    <div id="board"></div>
+        <div class="left-title">
+            CHAIN RXN.
+        </div>
+
+        <div class="center-text"
+             id="turnText">
+
+            BLUE player starts
+
+        </div>
+
+        <div class="right-info">
+
+            <span id="gameTimer">
+                GAME TIMER 
+            </span>
+
+            <span id="playerTimer">
+                PLAYER TIMER 
+            </span>
+
+            <span id="blueScore">
+                 0
+            </span>
+
+            <span id="redScore">
+                RED 0
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- GAME AREA -->
+
+    <main class="game-container">
+
+        <div class="board"
+             id="board">
+
+        </div>
+
+    </main>
+
+
+    <!-- EXPLOSION SOUND -->
+
+    <audio id="explodeSound"
+           src="sounds/explode.mp3"></audio>
 
     <script src="script.js"></script>
 
