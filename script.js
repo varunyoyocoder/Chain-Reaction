@@ -12,27 +12,28 @@ let gameSeconds = 180;
 let playerSeconds = 15;
 let gameEnded = false;
 
-/* DOM */
 
-const boardElement = document.getElementById("board");
+// accessing clickable elements by id and updating them in js
+const boardElement = document.getElementById("board"); // css class board, html id board 72 cells clickable and id accessed
 
-const explodeSound = document.getElementById("explodeSound");
+const explodeSound = document.getElementById("explodeSound");// html audio id,
 
-const turnText = document.getElementById("turnText");
+const turnText = document.getElementById("turnText"); //class center text, id turn text,updated in js
+ 
+const pauseButton = document.getElementById("pauseBtn");
 
-/* BOARD DATA */
-
+//
 const board = Array.from(
   { length: ROWS },
 
   () =>
     Array.from(
-      { length: COLS },
+      { length: COLS },// returns an array with 12 col
 
       () => ({
         color: -1,
         count: 0,
-      }),
+      }),// returns an array with 6 cols , 12 rows and each cell has two attributes  count zero given, color empty given
     ),
 );
 
@@ -41,7 +42,7 @@ const board = Array.from(
 function createBoard() {
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
-      const cell = document.createElement("div");
+      const cell = document.createElement("div");// iding cell with its row,col 
 
       cell.classList.add("cell");
 
@@ -59,7 +60,7 @@ function createBoard() {
   updateBoard();
 }
 
-function startGame() {
+function startGame() {// game begins and variables are reset everytime it begins
   turn = 0;
 
   blueScore = 0;
@@ -85,7 +86,7 @@ function startGame() {
   createBoard();
 }
 
-function gameOver() {
+function gameOver() {// game ends and based on score winner announced,game starts after 10s
   gameEnded = true;
   if (redScore < blueScore) {
     turnText.innerText = "BLUE WINS";
@@ -104,34 +105,34 @@ startGame();
 /* TIMERS */
 
 setInterval(() => {
-  if (gameEnded) {
+  if (gameEnded) {//game ended initially true and exits when it becomes false
     return;
   }
   gameSeconds--;
 
   playerSeconds--;
 
-  const gm = Math.floor(gameSeconds / 60);
+  const gm = Math.floor(gameSeconds / 60); //gm is gm:00,, to find minute
 
-  const gs = String(gameSeconds % 60).padStart(2, "0");
+  const gs = String(gameSeconds % 60).padStart(2, "0"); //finding remainder for seconds, padstart adds zeroes if gs is less than 2 digits , and ensures gs is always 2 digits, gm:gs
 
-  const ps = String(playerSeconds).padStart(2, "0");
+  const ps = String(playerSeconds).padStart(2, "0");//same as game time
 
-  document.getElementById("gameTimer").innerText = `GAME TIMER ${gm}:${gs}`;
+  document.getElementById("gameTimer").innerText = `GAME TIMER ${gm}:${gs}`;//html id to update game timer in js
 
-  document.getElementById("playerTimer").innerText = `PLAYER TIMER 0:${ps}`;
+  document.getElementById("playerTimer").innerText = `PLAYER TIMER 0:${ps}`;//html id to update playertime in js
 
-  if (playerSeconds <= 0) {
+  if (playerSeconds <= 0) {//player loses turn switched to next player
     switchTurn();
   }
-  if (gameSeconds <= 0) {
+  if (gameSeconds <= 0) {//game over
     gameOver();
   }
-}, 1000);
+}, 1000);// function called every 1 sec interval
 
-/* CELL TYPES */
 
-function cornerCell(row, col) {
+
+function cornerCell(row, col) {//checking corner
   return (
     (row === 0 && col === 0) ||
     (row === 0 && col === COLS - 1) ||
@@ -140,23 +141,24 @@ function cornerCell(row, col) {
   );
 }
 
-function edgeCell(row, col) {
+function edgeCell(row, col) {// checking edge, if not edge and corner it is innercell
   return (
     ((row === 0 || row === ROWS - 1) && col > 0 && col < COLS - 1) ||
     ((col === 0 || col === COLS - 1) && row > 0 && row < ROWS - 1)
   );
 }
 
-/* CAPACITY */
 
-function getCapacity(row, col) {
+
+function getCapacity(row, col) {// first move and to check chain reaction
   if (cornerCell(row, col)) {
     return 1;
   }
 
-  if (edgeCell(row, col)) {
+  else if (edgeCell(row, col)) {
     return 2;
   }
+
 
   return 3;
 }
@@ -164,7 +166,7 @@ function getCapacity(row, col) {
 /* HANDLE MOVE */
 
 function handleMove(event) {
-  if (gameEnded) {
+  if (gameEnded) {//checking if gameEnded, then exit function
     return;
   }
   const row = parseInt(event.target.dataset.row);
@@ -173,17 +175,17 @@ function handleMove(event) {
 
   const cell = board[row][col];
 
-  const currentPlayer = turn % 2;
+  const currentPlayer = turn % 2;//0 blue 1 red
 
-  /* FIRST TWO TURNS */
+  
 
-  if (turn < 2) {
-    if (cell.color !== -1) {
+  if (turn < 2) {//to check first move of blue and red
+    if (cell.color !== -1) {//initial all cells empty,so color==-1,if red chooses blue celll func exits
       return;
     }
 
     cell.color = currentPlayer;
-
+//initialising ball count
     if (cornerCell(row, col)) {
       cell.count = 1;
     } else if (edgeCell(row, col)) {
@@ -192,29 +194,29 @@ function handleMove(event) {
       cell.count = 3;
     }
     if (currentPlayer === 0) {
-      blueScore += cell.count;
-      blueCell++;
+      blueScore += cell.count;//updating cell count accordingly
+      blueCell++;//to check no of cells with blue balls
     } else {
       redScore += cell.count;
-      redCell++;
+      redCell++;//to check no of cells with red balls
     }
 
     updateBoard();
 
-    switchTurn();
+    switchTurn();// blue to red, red to blue
 
     return;
   }
 
-  /* AFTER FIRST TWO MOVES */
-
+  
+//after first move of blue and red
   if (cell.color !== currentPlayer) {
     return;
   }
 
-  /* NORMAL MOVE */
+ 
 
-  cell.count++;
+  cell.count++;//for every move add one ball
   if (currentPlayer === 0) {
     blueScore++;
   } else {
@@ -233,7 +235,7 @@ function handleMove(event) {
 function chainReaction(row, col) {
   const cell = board[row][col];
 
-  if (cell.count <= getCapacity(row, col)) {
+  if (cell.count <= getCapacity(row, col)) {// checks if chain reaction possible
     return;
   }
 
@@ -244,16 +246,16 @@ function chainReaction(row, col) {
   const color = cell.color;
 
   //cell becomes empty
-  if(color===0)blueCell--;
+  if(color===0)blueCell--;// particular cell becomes  empty after explosion
   else redCell--;
-  cell.count = 0;
-  cell.color = -1;
+  cell.count = 0;//count=0
+  cell.color = -1;//empty
 
   const directions = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1],
+    [-1, 0],//  upbox
+    [1, 0],// down box
+    [0, -1],//left box
+    [0, 1],// right box
   ];
 
   for (const [dr, dc] of directions) {
@@ -261,38 +263,37 @@ function chainReaction(row, col) {
 
     const nc = col + dc;
 
-    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {// checking if these cell exist
       if (board[nr][nc].color === -1) {
         //cell is empty
         if (color === 0) {//if exploding cell is blue
-          blueScore++;
-          blueCell++;
+          blueScore++;//capturing empty cell +1 point
+          blueCell++;// capturing new cell,bluecell count +1
         } else if(color===1) {//if exploding cell is red
-          redScore++;
-          redCell++;
+          redScore++;//capturing empty cell +1 point
+          redCell++;// capturing new cell,red cell count +1
         }
       } else if (board[nr][nc].color !== color) {
         //cell is of opposite color
         if (color === 0) {//if exploding cell is blue
-          blueScore++;
-          redCell--;
+          blueScore++;// exploding cell becomes blue
+          redCell--;// red cell becomes blue, count dec
           blueCell++;
         } else if(color===1) {//if exploding cell is red
-          redScore++;
-          blueCell--;
-          redCell++;
-        }
+            blueCell--;// blue cell becomes red, count dec
+            redScore++;// exploding cell becomes red
+            redCell++;
+        }// same color case, redCell/blueCell does not inc,and score does not inc
       }
-      board[nr][nc].color = color;
+      board[nr][nc].color = color;// color of neighbouring cell changes to explosion cell
 
-      board[nr][nc].count++;
+      board[nr][nc].count++;//count of neighbouring cell updated
 
-      chainReaction(nr, nc);
+      chainReaction(nr, nc);//recursion
     }
   }
 }
 
-/* UPDATE BOARD */
 
 function updateBoard() {
   const cells = document.querySelectorAll(".cell");
@@ -304,7 +305,7 @@ function updateBoard() {
 
     const data = board[row][col];
 
-    cell.innerHTML = "";
+    cell.innerHTML = "";//creating 72 empty cells
 
     const colorClass = data.color === 0 ? "blue-orb" : "red-orb";
 
@@ -399,11 +400,11 @@ function switchTurn() {
   playerSeconds = 15;
 
   if (turn % 2 === 0) {
-    turnText.innerText = "BLUE player's turn";
+    turnText.innerText = "BLUE's turn";
 
     turnText.style.color = "blue";
   } else {
-    turnText.innerText = "RED player's turn";
+    turnText.innerText = "RED's turn";
 
     turnText.style.color = "red";
   }

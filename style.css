@@ -50,18 +50,17 @@ body {
 
     flex-wrap: wrap;
 
-    padding: 10px 20px;
+    padding: 10px clamp(10px, 3vw, 25px);
 
     color: white;
 
-    gap: 15px;
+    gap: 12px;
+    position: relative;
 }
-
 /* LEFT TITLE */
-
 .left-title {
 
-    font-size: 26px;
+    font-size: clamp(18px, 2vw, 28px);
 
     font-weight: 900;
 
@@ -73,15 +72,19 @@ body {
 
 .center-text {
 
-    flex: 1;
+    position: absolute;
 
-    text-align: center;
+    left: 50%;
 
-    font-size: 24px;
+    transform: translateX(-50%);
+
+    font-size: clamp(18px, 2vw, 28px);
 
     font-weight: bold;
 
-    min-width: 180px;
+    text-align: center;
+
+    white-space: nowrap;
 }
 
 
@@ -91,9 +94,9 @@ body {
 
     display: flex;
 
-    gap: 18px;
+    gap: clamp(8px, 1.5vw, 18px);
 
-    font-size: 14px;
+    font-size: clamp(10px, 1vw, 14px);
 
     font-weight: bold;
 
@@ -101,7 +104,6 @@ body {
 
     justify-content: flex-end;
 }
-
 /* GAME AREA */
 
 .game-container {
@@ -114,23 +116,22 @@ body {
 
     align-items: flex-start;
 
-    padding-top: 12px;
+    padding-top: 10px;
 
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }
 
 
 /* BOARD */
-
 .board {
 
-    width: min(92vw, 320px);
+    width: min(92vw, 340px);
 
-    aspect-ratio: 1 / 2.2;
+    height: min(78vh, 760px);
 
     background-color: black;
 
-    padding: 5px;
+    padding: min(1vw, 5px);
 
     display: grid;
 
@@ -138,11 +139,10 @@ body {
 
     grid-template-rows: repeat(12, 1fr);
 
-    gap: 3px;
+    gap: min(0.6vw, 3px);
 
     border-radius: 8px;
 }
-
 
 /* CELLS */
 
@@ -176,15 +176,16 @@ body {
 
 .orb {
 
-    width: 16px;
+    width: clamp(8px, 1.7vw, 16px);
 
-    height: 16px;
+    height: clamp(8px, 1.7vw, 16px);
 
     border-radius: 50%;
 
     position: absolute;
 
     animation: pulse 1s infinite;
+    pointer-events: none;
 }
 
 
@@ -231,6 +232,8 @@ body {
 
 /* TABLET */
 
+
+
 @media (max-width: 992px)
 {
     .center-text {
@@ -264,34 +267,135 @@ body {
 
 /* MOBILE */
 
+
 @media (max-width: 576px)
 {
+
+    /* HEADER */
+
+    .top-bar {
+
+        padding: 14px 10px;
+
+        gap: 8px;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+    }
+
+
+    /* TITLE */
+
     .left-title {
 
-        font-size: 20px;
+        font-size: 16px;
+
+        text-align: center;
     }
+
+
+    /* TURN TEXT */
 
     .center-text {
 
-        font-size: 18px;
+        position: static;
+
+        transform: none;
+
+        width: 100%;
+
+        text-align: center;
+
+        order: 3;
+
+        font-size: 16px;
+
+        margin-top: 4px;
     }
+
+
+    /* TIMER SECTION */
 
     .right-info {
 
-        font-size: 12px;
+        width: 100%;
+
+        justify-content: center;
 
         gap: 10px;
+
+        font-size: 10px;
+
+        flex-wrap: wrap;
     }
+
+
+    /* GAME AREA */
+
+    .game-container {
+
+        padding-top: 6px;
+
+        padding-bottom: 20px;
+    }
+
+
+    /* BOARD */
 
     .board {
 
-        width: 90vw;
+        width: 94vw;
+
+        aspect-ratio: 1 / 1.95;
+
+        gap: 2px;
+
+        padding: 4px;
+
+        border-radius: 12px;
     }
+
+
+    /* CELLS */
+
+    .cell {
+
+        border-width: 1px;
+    }
+
+
+    /* ORBS */
 
     .orb {
 
-        width: 12px;
+        width: 9px;
 
-        height: 12px;
+        height: 9px;
     }
+}
+#pauseBtn {
+
+    
+
+    color: black;
+
+    border: none;
+
+    padding: 6px 12px;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#pauseBtn:hover {
+
+    background: #d0d;
 }
