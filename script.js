@@ -1,22 +1,22 @@
 const ROWS = 12;
 const COLS = 6;
 
-let turn = 0;
+let turn;
 
-let blueScore = 0;
-let redScore = 0;
-let redCell = 0;
-let blueCell = 0;
+let blueScore;
+let redScore;
+let redCell;
+let blueCell;
 
-let gameSeconds = 180;
-let playerSeconds = 15;
+let gameSeconds;
+let playerSeconds;
 let gameEnded = false;
 let intervalId = "resume";
 
 // accessing clickable elements by id and updating them in js
-const boardElement = document.getElementById("board"); // css class board, html id board 72 cells clickable and id accessed
-const explodeSound = document.getElementById("explodeSound"); // html audio id,
-const turnText = document.getElementById("turnText"); //class center text, id turn text,updated in js
+const boardElement = document.getElementById("board"); 
+const explodeSound = document.getElementById("explodeSound"); 
+const turnText = document.getElementById("turnText"); 
 
 const pauseButton = document.getElementById("pauseBtn");
 
@@ -34,7 +34,6 @@ restartButton.addEventListener("click",()=>{
     restartDialogBox.classList.add("hidden");
     startGame();
 });
-//
 const board = Array.from(
   { length: ROWS },
 
@@ -55,13 +54,10 @@ function createBoard() {
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
       const cell = document.createElement("div"); // iding cell with its row,col
-
-      cell.classList.add("cell");
-
+      cell.classList.add("cell");//access cell class 
       cell.dataset.row = row;
-      cell.dataset.color = -1;
+      cell.dataset.color = -1;// creates data attributes of cell  row,col,color,count
       cell.dataset.count = 0;
-
       cell.dataset.col = col;
 
       cell.addEventListener("click", handleMove);
@@ -73,7 +69,7 @@ function createBoard() {
 }
 
 function startGame() {
-  // game begins and variables are reset everytime it begins
+  // game begins and variables are reset everytime it restarts
   turn = 0;
 
   blueScore = 0;
@@ -81,7 +77,7 @@ function startGame() {
   redCell = 0;
   blueCell = 0;
 
-  gameSeconds = 180;
+  gameSeconds = 300;
   playerSeconds = 15;
   gameEnded = false;
   turnText.innerText = "BLUE's Turn";
@@ -89,7 +85,7 @@ function startGame() {
 
   boardElement.innerHTML = "";
   for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
+    for (let col = 0; col < COLS; col++) {// cell data attributes reset to count zero ,color empty
       board[row][col] = {
         color: -1,
         count: 0,
@@ -135,9 +131,9 @@ function updateTimer() {
 
   const ps = String(playerSeconds).padStart(2, "0"); //same as game time
 
-  document.getElementById("gameTimer").innerText = `GAME TIMER ${gm}:${gs}`; //html id to update game timer in js
+  document.getElementById("gameTimer").innerText = `GAME TIMER ${gm}:${gs}`; //to update game timer in js
 
-  document.getElementById("playerTimer").innerText = `PLAYER TIMER 0:${ps}`; //html id to update playertime in js
+  document.getElementById("playerTimer").innerText = `PLAYER TIMER 0:${ps}`; //to update playertime in js
 
   if (playerSeconds <= 0) {
     //player loses turn switched to next player
@@ -149,17 +145,17 @@ function updateTimer() {
   }
 }
 
-intervalId = setInterval(updateTimer, 1000); // function called every 1 sec interval
-function pauseInterval() {
+intervalId = setInterval(updateTimer, 1000); // function called every 1000 ms interval
+function pauseInterval() {//stops the setinterval for timers
   clearInterval(intervalId);
-  pauseDialogBox.classList.remove("hidden");
+  pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
 }
 
 // Resume
 function resumeInterval() {
   clearInterval(intervalId); // Prevents duplicate intervals
-  pauseDialogBox.classList.add("hidden");
-  intervalId = setInterval(updateTimer, 1000);
+  pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable
+  intervalId = setInterval(updateTimer, 1000);//resumes the setinterval call for timers
 }
 
 function cornerCell(row, col) {
@@ -181,17 +177,16 @@ function edgeCell(row, col) {
 }
 
 function getCapacity(row, col) {
-  // first move and to check chain reaction
+  //  to check chain reaction
   if (cornerCell(row, col)) {
     return 1;
   } else if (edgeCell(row, col)) {
     return 2;
   }
-
   return 3;
 }
 
-/* HANDLE MOVE */
+
 
 function handleMove(event) {
   if (gameEnded) {
@@ -230,7 +225,7 @@ function handleMove(event) {
       redCell++; //to check no of cells with red balls
     }
 
-    updateBoard();
+    updateBoard();//
 
     switchTurn(); // blue to red, red to blue
 
@@ -256,7 +251,7 @@ function handleMove(event) {
   switchTurn();
 }
 
-/* CHAIN REACTION */
+
 
 function chainReaction(row, col) {
   const cell = board[row][col];
@@ -266,7 +261,7 @@ function chainReaction(row, col) {
     return;
   }
 
-  explodeSound.currentTime = 0;
+  explodeSound.currentTime = 0;// sound when it explodes
 
   explodeSound.play();
 
@@ -326,9 +321,9 @@ function chainReaction(row, col) {
     }
   }
 }
-
+//retrieves cell count, color , then updates them as orbs for every call,for the nxt call, it empties all orbs checks cell count color and updates them with orbs  goes on
 function updateBoard() {
-  const cells = document.querySelectorAll(".cell");
+  const cells = document.querySelectorAll(".cell");//select all html elements with class cell
 
   cells.forEach((cell) => {
     const row = parseInt(cell.dataset.row);
@@ -337,7 +332,7 @@ function updateBoard() {
 
     const data = board[row][col];
 
-    cell.innerHTML = ""; //creating 72 empty cells
+    cell.innerHTML = "";
 
     const colorClass = data.color === 0 ? "blue-orb" : "red-orb";
 
@@ -360,8 +355,7 @@ function updateBoard() {
   }
 }
 
-/* ORB CREATION */
-
+//creates div dynamically shapes them to orbs,translates their centres apporpriately,
 function createOrb(colorClass) {
   const orb = document.createElement("div");
 
@@ -422,8 +416,8 @@ function createTripleOrb(cell, colorClass) {
   });
 }
 
-/* SWITCH TURN */
 
+//switches turn between red and blue and updates player's turn in text
 function switchTurn() {
   if (gameEnded) {
     return;
