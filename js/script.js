@@ -119,6 +119,9 @@ function gameOver() {
   dialogBoxPara.style.color="green";
 }
 
+startGame();
+
+
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
