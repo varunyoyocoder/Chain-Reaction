@@ -7,11 +7,13 @@ let blueScore;
 let redScore;
 let redCell;
 let blueCell;
+let redCellsArray;
 
 let gameSeconds;
 let playerSeconds;
 let gameEnded = false;
 let intervalId = "resume";
+let noOfPlayers=2;
 
 const gameTitle=document.getElementById("gameTitle");
 
@@ -40,6 +42,7 @@ restartButton.addEventListener("click",()=>{
     restartDialogBox.classList.add("hidden");
     startGame();
 });
+
 const board = Array.from(
   { length: ROWS },
 
@@ -53,8 +56,6 @@ const board = Array.from(
       }), // returns an array with 6 cols , 12 rows and each cell has two attributes  count zero given, color empty given
     ),
 );
-
-
 
 function createBoard() {
   for (let row = 0; row < ROWS; row++) {
@@ -118,29 +119,25 @@ function gameOver() {
   dialogBoxPara.style.color="green";
 }
 
-
-startGame();
-
-
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
     return;
   }
   gameSeconds--;
-
+  
   playerSeconds--;
-
+  
   const gm = Math.floor(gameSeconds / 60); //gm is gm:00,, to find minute
-
+  
   const gs = String(gameSeconds % 60).padStart(2, "0"); //finding remainder for seconds, padstart adds zeroes if gs is less than 2 digits , and ensures gs is always 2 digits, gm:gs
-
+  
   const ps = String(playerSeconds).padStart(2, "0"); //same as game time
-
+  
   document.getElementById("gameTimer").innerText = `GAME TIMER ${gm}:${gs}`; //to update game timer in js
-
+  
   document.getElementById("playerTimer").innerText = `PLAYER TIMER 0:${ps}`; //to update playertime in js
-
+  
   if (playerSeconds <= 0) {
     //player loses turn switched to next player
     switchTurn();
@@ -156,7 +153,6 @@ function pauseInterval() {//stops the setinterval for timers
   clearInterval(intervalId);
   pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
 }
-
 
 function resumeInterval() {
   clearInterval(intervalId); // Prevents duplicate intervals
@@ -192,28 +188,25 @@ function getCapacity(row, col) {
   return 3;
 }
 
-
-
 function handleMove(event) {
   if (gameEnded) {
     //checking if gameEnded, then exit function
     return;
   }
   const row = parseInt(event.target.dataset.row);
-
+  
   const col = parseInt(event.target.dataset.col);
-
+  
   const cell = board[row][col];
-
-  const currentPlayer = turn % 2; //0 blue 1 red
-
+  
+  const currentPlayer = turn % noOfPlayers; //0 blue 1 red
+  
   if (turn <2||(turn===2&&blueCell===0)) {
     //to check first move of blue and red and if blue misses firstmove
     if (cell.color !== -1) {
       //initial all cells empty,so color==-1,if red chooses blue celll func exits
       return;
     }
-
     cell.color = currentPlayer;
     //initialising ball count
     if (cornerCell(row, col)) {
@@ -256,8 +249,6 @@ function handleMove(event) {
 
   switchTurn();
 }
-
-
 
 function chainReaction(row, col) {
   const cell = board[row][col];
@@ -341,7 +332,7 @@ function updateBoard() {
     cell.innerHTML = "";
 
     const colorClass = data.color === 0 ? "blue-orb" : "red-orb";
-
+    
     if (data.count === 1) {
       createSingleOrb(cell, colorClass);
     } else if (data.count === 2) {
@@ -422,7 +413,6 @@ function createTripleOrb(cell, colorClass) {
   });
 }
 
-
 //switches turn between red and blue and updates player's turn in text
 function switchTurn() {
   if (gameEnded) {
@@ -441,3 +431,10 @@ function switchTurn() {
     turnText.style.color = "red";
   }
 }
+
+startGame();
+
+
+const params =
+    new URLSearchParams(window.location.search);
+let gameMode =params.get('mode');    

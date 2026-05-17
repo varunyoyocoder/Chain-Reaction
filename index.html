@@ -1,83 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Chain Reaction</title>
 
-    <link rel="stylesheet"
-          href="css/home.css">
+    <link rel="stylesheet" href="css/home.css" />
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <div class="landing-container">
+      <div class="game-card">
+        <h1 class="game-title">CHAIN REACTION</h1>
 
-        <div class="game-card">
+        <p class="subtitle">A strategic multiplayer explosion game</p>
 
-            <h1 class="game-title">
-                CHAIN REACTION
-            </h1>
-
-            <p class="subtitle">
-                A strategic multiplayer explosion game
-            </p>
-
-            <div class="starter-info">
-
-                <h2>
-                    🔵 Blue starts first
-                </h2>
-
-            </div>
-
-            <div class="rules-box">
-
-                <h3>Quick Rules</h3>
-
-                <ul>
-
-                    <li>
-                        Turn-Based: A tactical battle between two or more players.
-                    </li>
-
-                    <li>
-                        Timers: Includes a total Game Timer and a rapid Turn Timer to keep the pressure high.
-                    </li>
-
-                    <li>
-                        Scoring System: Points are calculated based on the number of pieces captured in a reaction and the number of chain reactions.
-                    </li>
-                    
-                    <li>
-                        Win Condition: Game ends when the board has only elements of one player (or) the timer runs out.
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <a href="game.html"
-               class="start-link">
-
-                <button class="start-btn">
-
-                    START GAME
-
-                </button>
-
-            </a>
-
+        <div class="starter-info">
+          <h2>🔵 Blue starts first</h2>
         </div>
 
+        <div class="rules-box">
+          <h3>Quick Rules</h3>
+
+          <ul>
+            <li>Turn-Based: A tactical battle between two or more players.</li>
+
+            <li>
+              Timers: Includes a total Game Timer and a rapid Turn Timer to keep
+              the pressure high.
+            </li>
+
+            <li>
+              Scoring System: Points are calculated based on the number of
+              pieces captured in a reaction and the number of chain reactions.
+            </li>
+
+            <li>
+              Win Condition: Game ends when the board has only elements of one
+              player (or) the timer runs out.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <button class="start-btn" id="startBtn">START GAME</button>
+        </div>
+      </div>
     </div>
-
-</body>
-
+    <div id="game-mode" class="overlay hidden">
+        <div class="dialog-box">
+        <h2>Choose player mode</h2>
+        <!-- <a href="game.html?mode=0" disabled> -->
+            <button class="dialog-box-button" id="bot-button">BOT</button>
+        <!-- </a> -->
+        <a href="game.html?mode=1">
+            <button class="dialog-box-button" id="twoPlayer">2 Player</button>
+        </a>
+        </div>
+    </div>
+  </body>
+  <script src="js/home.js"></script>
 </html>
