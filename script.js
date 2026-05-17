@@ -39,7 +39,7 @@ const board = Array.from(
 
   () =>
     Array.from(
-      { length: COLS }, // returns an array with 12 col
+      { length: COLS }, // returns an array with 12 col arrays
 
       () => ({
         color: -1,
