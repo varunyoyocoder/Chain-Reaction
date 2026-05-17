@@ -50,9 +50,26 @@
             <span id="redScore">
                 RED 0
             </span>
+            <div id="pauseOverlay" class="overlay hidden">
+                <!-- The dialog box in the middle -->
+                <div class="dialog-box ">
+                    <h2>Game Paused</h2>
+                    <p>Everything is currently frozen.</p>
+                    <button class="dialog-box-button" id="resumeBtn">Resume</button>
+                </div>
+            </div>
+            <div id="restartOverlay" class="overlay hidden">
+                <div class="dialog-box">
+                    <h2 id ="dialogBoxHeader"></h2>
+                    <p id ="dialogBoxPara"></p>
+                    <button class="dialog-box-button" id="restartBtn">Restart</button>
+                </div>
+            </div>
             <button id="pauseBtn">
-                    PAUSE
+                PAUSE
             </button>
+            
+        
 
         </div>
 
