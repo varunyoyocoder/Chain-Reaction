@@ -1,14 +1,11 @@
 const ROWS = 12;
 const COLS = 6;
-
 let turn;
-
 let blueScore;
 let redScore;
 let redCell;
 let blueCell;
 let redCellsArray;
-
 let gameSeconds;
 let playerSeconds;
 let gameEnded = false;
@@ -16,21 +13,16 @@ let intervalId = "resume";
 let noOfPlayers=2;
 
 const gameTitle=document.getElementById("gameTitle");
-
 gameTitle.addEventListener("click",()=>{
   window.location.href = "../index.html";
 })
-
 // accessing clickable elements by id and updating them in js
 const boardElement = document.getElementById("board"); 
 const explodeSound = document.getElementById("explodeSound"); 
 const turnText = document.getElementById("turnText"); 
-
 const pauseButton = document.getElementById("pauseBtn");
-
 const pauseDialogBox = document.getElementById("pauseOverlay");
 const resumeButton = document.getElementById("resumeBtn");
-
 const restartDialogBox = document.getElementById("restartOverlay");
 const restartButton = document.getElementById("restartBtn");
 const dialogBoxHeader = document.getElementById("dialogBoxHeader");
@@ -42,54 +34,42 @@ restartButton.addEventListener("click",()=>{
     restartDialogBox.classList.add("hidden");
     startGame();
 });
-
 const board = Array.from(
   { length: ROWS },
 
   () =>
     Array.from(
-      { length: COLS }, // returns an array with 12 col arrays
+      { length: COLS }, // returns an array with 12 col
 
       () => ({
         color: -1,
         count: 0,
-      }), // returns an array with 6 cols , 12 rows and each cell has two attributes  count zero given, color empty given
+      }), // returns an array with 6 cols , 12 rows and each cell is an object with two attributes  count zero given, color empty given
     ),
 );
-
-function createBoard() {
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      const cell = document.createElement("div"); // iding cell with its row,col
-      cell.classList.add("cell");//access cell class 
-      cell.dataset.row = row;
-      cell.dataset.color = -1;// creates data attributes of cell  row,col,color,count
-      cell.dataset.count = 0;
-      cell.dataset.col = col;
-
-      cell.addEventListener("click", handleMove);
-
-      boardElement.appendChild(cell);
-    }
-  }
-  updateBoard();
+intervalId = setInterval(updateTimer, 1000); // updateTimer called every 1000 ms interval
+function pauseInterval() {//stops the setInterval for timers
+  clearInterval(intervalId);
+  pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
 }
-
+function resumeInterval() {
+  clearInterval(intervalId); // Prevents duplicate intervals
+  pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable
+  intervalId = setInterval(updateTimer, 1000);//resumes the setinterval call for timers
+}
+startGame();
 function startGame() {
   // game begins and variables are reset everytime it restarts
   turn = 0;
-
   blueScore = 0;
   redScore = 0;
   redCell = 0;
   blueCell = 0;
-
   gameSeconds = 300;
   playerSeconds = 15;
   gameEnded = false;
   turnText.innerText = "BLUE's Turn";
   turnText.style.color = "blue";
-
   boardElement.innerHTML = "";
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {// cell data attributes reset to count zero ,color empty
@@ -101,27 +81,6 @@ function startGame() {
   }
   createBoard();
 }
-
-function gameOver() {
-  // game ends and based on score winner announced,game starts after 10s
-  gameEnded = true;
-  turnText.innerText = "";
-  
-  restartDialogBox.classList.remove("hidden");
-  if (blueScore > redScore) {
-    dialogBoxHeader.innerText = "Blue Wins";
-    dialogBoxHeader.style.color = "blue";
-  } else {
-    dialogBoxHeader.innerText = "Red Wins";
-    dialogBoxHeader.style.color = "red";
-  }
-  dialogBoxPara.innerText=`Blue Score:${blueScore} Red Score:${redScore}`;
-  dialogBoxPara.style.color="green";
-}
-
-startGame();
-
-
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
@@ -150,47 +109,23 @@ function updateTimer() {
     gameOver();
   }
 }
+function createBoard() {
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      const cell = document.createElement("div"); // dynamic html  cell,cell css  dataset with its row,col
+      cell.classList.add("cell");//access cell class 
+      cell.dataset.row = row;
+      cell.dataset.color = -1;// creates data attributes of cell  row,col,color,count
+      cell.dataset.count = 0;
+      cell.dataset.col = col;
 
-intervalId = setInterval(updateTimer, 1000); // function called every 1000 ms interval
-function pauseInterval() {//stops the setinterval for timers
-  clearInterval(intervalId);
-  pauseDialogBox.classList.remove("hidden");//pause dialogue box appears,timer pause, screen elements non-clickable
-}
+      cell.addEventListener("click", handleMove);
 
-function resumeInterval() {
-  clearInterval(intervalId); // Prevents duplicate intervals
-  pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable
-  intervalId = setInterval(updateTimer, 1000);//resumes the setinterval call for timers
-}
-
-function cornerCell(row, col) {
-  //checking corner
-  return (
-    (row === 0 && col === 0) ||
-    (row === 0 && col === COLS - 1) ||
-    (row === ROWS - 1 && col === 0) ||
-    (row === ROWS - 1 && col === COLS - 1)
-  );
-}
-
-function edgeCell(row, col) {
-  // checking edge, if not edge and corner it is innercell
-  return (
-    ((row === 0 || row === ROWS - 1) && col > 0 && col < COLS - 1) ||
-    ((col === 0 || col === COLS - 1) && row > 0 && row < ROWS - 1)
-  );
-}
-
-function getCapacity(row, col) {
-  //  to check chain reaction
-  if (cornerCell(row, col)) {
-    return 1;
-  } else if (edgeCell(row, col)) {
-    return 2;
+      boardElement.appendChild(cell);
+    }
   }
-  return 3;
+  updateBoard();
 }
-
 function handleMove(event) {
   if (gameEnded) {
     //checking if gameEnded, then exit function
@@ -252,74 +187,31 @@ function handleMove(event) {
 
   switchTurn();
 }
-
-function chainReaction(row, col) {
-  const cell = board[row][col];
-
-  if (cell.count <= getCapacity(row, col)) {
-    // checks if chain reaction possible
-    return;
+//finding cell type and capacity
+function cornerCell(row, col) {
+  //checking corner
+  return (
+    (row === 0 && col === 0) ||
+    (row === 0 && col === COLS - 1) ||
+    (row === ROWS - 1 && col === 0) ||
+    (row === ROWS - 1 && col === COLS - 1)
+  );
+}
+function edgeCell(row, col) {
+  // checking edge, if not edge and corner it is innercell
+  return (
+    ((row === 0 || row === ROWS - 1) && col > 0 && col < COLS - 1) ||
+    ((col === 0 || col === COLS - 1) && row > 0 && row < ROWS - 1)
+  );
+}
+function getCapacity(row, col) {
+  //  to check chain reaction
+  if (cornerCell(row, col)) {
+    return 1;
+  } else if (edgeCell(row, col)) {
+    return 2;
   }
-
-  explodeSound.currentTime = 0;// sound when it explodes
-
-  explodeSound.play();
-
-  const color = cell.color;
-
-  //cell becomes empty
-  if (color === 0)
-    blueCell--; // particular cell becomes  empty after explosion
-  else redCell--;
-  cell.count = 0; //count=0
-  cell.color = -1; //empty
-
-  const directions = [
-    [-1, 0], //  upbox
-    [1, 0], // down box
-    [0, -1], //left box
-    [0, 1], // right box
-  ];
-
-  for (const [dr, dc] of directions) {
-    const nr = row + dr;
-
-    const nc = col + dc;
-
-    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
-      // checking if these cell exist
-      if (board[nr][nc].color === -1) {
-        //cell is empty
-        if (color === 0) {
-          //if exploding cell is blue
-          blueScore++; //capturing empty cell +1 point
-          blueCell++; // capturing new cell,bluecell count +1
-        } else if (color === 1) {
-          //if exploding cell is red
-          redScore++; //capturing empty cell +1 point
-          redCell++; // capturing new cell,red cell count +1
-        }
-      } else if (board[nr][nc].color !== color) {
-        //cell is of opposite color
-        if (color === 0) {
-          //if exploding cell is blue
-          blueScore++; // exploding cell becomes blue
-          redCell--; // red cell becomes blue, count dec
-          blueCell++;
-        } else if (color === 1) {
-          //if exploding cell is red
-          blueCell--; // blue cell becomes red, count dec
-          redScore++; // exploding cell becomes red
-          redCell++;
-        } // same color case, redCell/blueCell does not inc,and score does not inc
-      }
-      board[nr][nc].color = color; // color of neighbouring cell changes to explosion cell
-
-      board[nr][nc].count++; //count of neighbouring cell updated
-
-      chainReaction(nr, nc); //recursion
-    }
-  }
+  return 3;
 }
 //retrieves cell count, color , then updates them as orbs for every call,for the nxt call, it empties all orbs checks cell count color and updates them with orbs  goes on
 function updateBoard() {
@@ -354,7 +246,6 @@ function updateBoard() {
     gameOver();
   }
 }
-
 //creates div dynamically shapes them to orbs,translates their centres apporpriately,
 function createOrb(colorClass) {
   const orb = document.createElement("div");
@@ -363,7 +254,6 @@ function createOrb(colorClass) {
 
   return orb;
 }
-
 function createSingleOrb(cell, colorClass) {
   const orb = createOrb(colorClass);
 
@@ -375,7 +265,6 @@ function createSingleOrb(cell, colorClass) {
 
   cell.appendChild(orb);
 }
-
 function createDoubleOrb(cell, colorClass) {
   const orb1 = createOrb(colorClass);
 
@@ -395,7 +284,6 @@ function createDoubleOrb(cell, colorClass) {
 
   cell.appendChild(orb2);
 }
-
 function createTripleOrb(cell, colorClass) {
   const positions = [
     ["50%", "28%"],
@@ -415,7 +303,29 @@ function createTripleOrb(cell, colorClass) {
     cell.appendChild(orb);
   });
 }
+function gameOver() {
+  // game ends and based on score winner announced,game starts after 10s
+  gameEnded = true;
+  turnText.innerText = "";
+  
+  restartDialogBox.classList.remove("hidden");
+  if (blueScore > redScore) {
+    dialogBoxHeader.innerText = "Blue Wins";
+    dialogBoxHeader.style.color = "blue";
+  } else {
+    dialogBoxHeader.innerText = "Red Wins";
+    dialogBoxHeader.style.color = "red";
+  }
+ dialogBoxPara.innerHTML = `
+  <span style="color:blue">
+    Blue Score: ${blueScore}
+  </span>
 
+  <span style="color:red">
+    Red Score: ${redScore}
+  </span>
+`;//make blue score blue and same for red,spanop
+}
 //switches turn between red and blue and updates player's turn in text
 function switchTurn() {
   if (gameEnded) {
@@ -434,10 +344,73 @@ function switchTurn() {
     turnText.style.color = "red";
   }
 }
+function chainReaction(row, col) {
+  const cell = board[row][col];
 
-startGame();
+  if (cell.count <= getCapacity(row, col)) {
+    // checks if chain reaction possible
+    return;
+  }
 
+  explodeSound.currentTime = 0;// reset audio to start 
 
-const params =
-    new URLSearchParams(window.location.search);
+  explodeSound.play();//play sound
+
+  const color = cell.color;
+
+  //cell becomes empty
+  if (color === 0)
+    blueCell--; // particular cell becomes  empty after explosion
+  else redCell--;
+  cell.count = 0; //count=0
+  cell.color = -1; //empty
+
+  const directions = [
+    [-1, 0], //  upbox
+    [1, 0], // down box
+    [0, -1], //left box
+    [0, 1], // right box
+  ];
+
+  for (const [dr, dc] of directions) {
+    const nr = row + dr;
+
+    const nc = col + dc;
+
+    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+      // checking if these cell exist
+      if (board[nr][nc].color === -1) {
+        //cell is empty
+        if (color === 0) {
+          //if exploding cell is blue
+          blueScore++; //capturing empty cell +1 point
+          blueCell++; // capturing new cell,bluecell count +1
+        } 
+        //if exploding cell is red
+        redScore++; //capturing empty cell +1 point
+        redCell++; // capturing new cell,red cell count +1
+        
+      } else if (board[nr][nc].color !== color) {
+        //cell is of opposite color
+        if (color === 0) {
+          //if exploding cell is blue
+          blueScore++; // exploding cell becomes blue
+          redCell--; // red cell becomes blue, count dec
+          blueCell++;
+        }  
+          //if exploding cell is red
+        blueCell--; // blue cell becomes red, count dec
+        redScore++; // exploding cell becomes red
+        redCell++;
+         // same color case, redCell/blueCell does not inc,and score does not inc
+      }
+      board[nr][nc].color = color; // color of neighbouring cell changes to explosion cell
+
+      board[nr][nc].count++; //count of neighbouring cell updated
+
+      chainReaction(nr, nc); //recursion
+    }
+  }
+}
+const params =new URLSearchParams(window.location.search);
 let gameMode =params.get('mode');    

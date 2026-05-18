@@ -32,7 +32,6 @@ body {
 }
 
 
-/* MAIN CONTAINER */
 
 .landing-container {
 
@@ -48,7 +47,7 @@ body {
 }
 
 
-/* GAME CARD */
+
 
 .game-card {
 
@@ -77,7 +76,7 @@ body {
 }
 
 
-/* TITLE */
+
 
 .game-title {
 
@@ -91,7 +90,7 @@ body {
 }
 
 
-/* SUBTITLE */
+
 
 .subtitle {
 
@@ -103,7 +102,7 @@ body {
 }
 
 
-/* STARTER INFO */
+
 
 .starter-info {
 
@@ -119,7 +118,6 @@ body {
 }
 
 
-/* RULES BOX */
 
 .rules-box {
 
@@ -161,7 +159,6 @@ body {
 }
 
 
-/* BUTTON */
 
 .start-btn {
 
@@ -193,7 +190,7 @@ body {
 }
 
 
-/* HOVER */
+
 
 .start-btn:hover {
 

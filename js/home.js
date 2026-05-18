@@ -1,5 +1,5 @@
 const startButton=document.getElementById("startBtn")
-const startDialogBox = document.getElementById("game-mode");
+const startDialogBox = document.getElementById("gameMode");
 
 const twoPlayerButton=document.getElementById("twoPlayer");
 
