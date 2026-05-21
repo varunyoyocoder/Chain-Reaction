@@ -57,30 +57,7 @@ function resumeInterval() {
   pauseDialogBox.classList.add("hidden");//hides pause dialogue box,timer resume,screen element clickable
   intervalId = setInterval(updateTimer, 1000);//resumes the setinterval call for timers
 }
-startGame();
-function startGame() {
-  // game begins and variables are reset everytime it restarts
-  turn = 0;
-  blueScore = 0;
-  redScore = 0;
-  redCell = 0;
-  blueCell = 0;
-  gameSeconds = 300;
-  playerSeconds = 15;
-  gameEnded = false;
-  turnText.innerText = "BLUE's Turn";
-  turnText.style.color = "blue";
-  boardElement.innerHTML = "";
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {// cell data attributes reset to count zero ,color empty
-      board[row][col] = {
-        color: -1,
-        count: 0,
-      };
-    }
-  }
-  createBoard();
-}
+
 function updateTimer() {
   if (gameEnded) {
     //game ended initially true and exits when it becomes false
@@ -242,6 +219,7 @@ function updateBoard() {
   document.getElementById("redScore").innerText = `RED ${redScore}`;
   console.log(blueCell, redCell);
   if (turn > 1 && (redCell === 0 || blueCell === 0)) {
+    console.log("hi");
     gameEnded = true;
     gameOver();
   }
@@ -387,8 +365,10 @@ function chainReaction(row, col) {
           blueCell++; // capturing new cell,bluecell count +1
         } 
         //if exploding cell is red
+        else {
         redScore++; //capturing empty cell +1 point
-        redCell++; // capturing new cell,red cell count +1
+        redCell++;
+      } // capturing new cell,red cell count +1
         
       } else if (board[nr][nc].color !== color) {
         //cell is of opposite color
@@ -398,10 +378,11 @@ function chainReaction(row, col) {
           redCell--; // red cell becomes blue, count dec
           blueCell++;
         }  
-          //if exploding cell is red
+        else {  //if exploding cell is red
         blueCell--; // blue cell becomes red, count dec
         redScore++; // exploding cell becomes red
         redCell++;
+        }
          // same color case, redCell/blueCell does not inc,and score does not inc
       }
       board[nr][nc].color = color; // color of neighbouring cell changes to explosion cell
@@ -414,3 +395,27 @@ function chainReaction(row, col) {
 }
 const params =new URLSearchParams(window.location.search);
 let gameMode =params.get('mode');    
+startGame();
+function startGame() {
+  // game begins and variables are reset everytime it restarts
+  turn = 0;
+  blueScore = 0;
+  redScore = 0;
+  redCell = 0;
+  blueCell = 0;
+  gameSeconds = 300;
+  playerSeconds = 15;
+  gameEnded = false;
+  turnText.innerText = "BLUE's Turn";
+  turnText.style.color = "blue";
+  boardElement.innerHTML = "";
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {// cell data attributes reset to count zero ,color empty
+      board[row][col] = {
+        color: -1,
+        count: 0,
+      };
+    }
+  }
+  createBoard();
+}
