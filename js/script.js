@@ -9,7 +9,7 @@ let redCellsArray;
 let gameSeconds;
 let playerSeconds;
 let gameEnded = false;
-let intervalId = "resume";
+let intervalId;
 let noOfPlayers=2;
 
 const gameTitle=document.getElementById("gameTitle");
